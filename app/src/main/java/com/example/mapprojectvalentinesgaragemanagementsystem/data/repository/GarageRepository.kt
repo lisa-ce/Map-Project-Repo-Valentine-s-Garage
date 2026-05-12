@@ -1,6 +1,6 @@
-package com.example.mapprojectvalentinesgaragemanager.data.repository
+package com.example.mapprojectvalentinesgaragemanagementsystem.data.repository
 
-import com.example.mapprojectvalentinesgaragemanager.data.model.Truck
+import com.example.mapprojectvalentinesgaragemanagementsystem.data.model.Truck
 import com.google.firebase.firestore.FirebaseFirestore
 
 class GarageRepository {

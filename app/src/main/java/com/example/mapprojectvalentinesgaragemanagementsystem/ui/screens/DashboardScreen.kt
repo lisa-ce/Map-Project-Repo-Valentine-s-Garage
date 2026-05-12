@@ -9,7 +9,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DashboardScreen(
-    onCheckInClick: () -> Unit
+    onCheckInClick: () -> Unit,
+    onRepairsClick: () -> Unit
 ) {
 
     Column(
@@ -51,7 +52,7 @@ fun DashboardScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { },
+            onClick = onRepairsClick,
             modifier = Modifier.fillMaxWidth()
         ) {
 
