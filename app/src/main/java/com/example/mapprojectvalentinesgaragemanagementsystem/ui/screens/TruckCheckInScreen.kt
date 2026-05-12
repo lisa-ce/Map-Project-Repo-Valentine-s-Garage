@@ -1,12 +1,20 @@
 package com.example.mapprojectvalentinesgaragemanagementsystem.ui.screens
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mapprojectvalentinesgaragemanagementsystem.viewmodel.GarageViewModel
+
 @Composable
 fun TruckCheckInScreen(
     garageViewModel: GarageViewModel = viewModel()
@@ -17,123 +25,210 @@ fun TruckCheckInScreen(
     var make by remember { mutableStateOf("") }
     var model by remember { mutableStateOf("") }
     var kilometers by remember { mutableStateOf("") }
-    var fuelLevel by remember { mutableStateOf("1/2") }
+    var fuelLevel by remember { mutableStateOf("½") }
     var reportedIssue by remember { mutableStateOf("") }
     var damageNotes by remember { mutableStateOf("") }
-    var condition by remember { mutableStateOf("") }
-    var notes by remember { mutableStateOf("") }
+    var customTask by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    val repairTasks = listOf(
+        "Oil & filter change",
+        "Brake inspection",
+        "Tire rotation/check",
+        "Battery test",
+        "Coolant check",
+        "Air filter",
+        "Fluid top-up",
+        "Diagnostic scan"
+    )
+
+    val checkedTasks = remember { mutableStateMapOf<String, Boolean>() }
+
+    MobileGarageShell(
+        selectedTab = "checkin",
+        onTrucksClick = {},
+        onCheckInClick = {},
+        onReportsClick = {},
+        onLogoutClick = {}
     ) {
-        Text(
-            text = "New check-in",
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Text(
-            text = "Record vehicle condition before service starts."
-        )
-
-        OutlinedTextField(
-            value = plateNumber,
-            onValueChange = { plateNumber = it },
-            label = { Text("Plate Number") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = customerName,
-            onValueChange = { customerName = it },
-            label = { Text("Customer Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = customerPhone,
-            onValueChange = { customerPhone = it },
-            label = { Text("Customer Phone") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = make,
-            onValueChange = { make = it },
-            label = { Text("Make") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = model,
-            onValueChange = { model = it },
-            label = { Text("Model") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = kilometers,
-            onValueChange = { kilometers = it },
-            label = { Text("Odometer / Kilometers") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = fuelLevel,
-            onValueChange = { fuelLevel = it },
-            label = { Text("Fuel Level") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = reportedIssue,
-            onValueChange = { reportedIssue = it },
-            label = { Text("Reported Issue") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = damageNotes,
-            onValueChange = { damageNotes = it },
-            label = { Text("Damage / Cosmetic Notes") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = condition,
-            onValueChange = { condition = it },
-            label = { Text("Vehicle Condition") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = notes,
-            onValueChange = { notes = it },
-            label = { Text("Extra Notes") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Button(
-            onClick = {
-                garageViewModel.saveTruck(
-                    plateNumber = plateNumber,
-                    customerName = customerName,
-                    customerPhone = customerPhone,
-                    make = make,
-                    model = model,
-                    kilometers = kilometers.toIntOrNull() ?: 0,
-                    fuelLevel = fuelLevel,
-                    reportedIssue = reportedIssue,
-                    damageNotes = damageNotes,
-                    condition = condition,
-                    notes = notes
-                )
-            },
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
-            Text("Save Truck")
+            Text(
+                text = "New check-in",
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text("Record vehicle condition before service starts.")
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            CardBox(title = "Truck & customer") {
+                GarageInput(plateNumber, { plateNumber = it }, "Plate number *")
+                GarageInput(customerName, { customerName = it }, "Customer name *")
+                GarageInput(make, { make = it }, "Make", "Volvo, Scania…")
+                GarageInput(model, { model = it }, "Model")
+                GarageInput(customerPhone, { customerPhone = it }, "Customer phone")
+            }
+
+            Spacer(modifier = Modifier.height(22.dp))
+
+            CardBox(title = "Condition at check-in") {
+                GarageInput(kilometers, { kilometers = it }, "Odometer (km) *")
+                GarageInput(fuelLevel, { fuelLevel = it }, "Fuel level")
+                GarageInput(
+                    value = reportedIssue,
+                    onValueChange = { reportedIssue = it },
+                    label = "Reported issue",
+                    placeholder = "What does the customer say is wrong?",
+                    height = 82
+                )
+                GarageInput(
+                    value = damageNotes,
+                    onValueChange = { damageNotes = it },
+                    label = "Damage / cosmetic notes",
+                    placeholder = "Existing scratches, dents, etc.",
+                    height = 82
+                )
+
+                Text("Condition photos (0/8)")
+
+                OutlinedButton(
+                    onClick = {},
+                    modifier = Modifier.size(78.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(1.dp, Color(0xFFD8CCC4))
+                ) {
+                    Text("Add")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(22.dp))
+
+            CardBox(title = "Repair tasks") {
+                repairTasks.forEach { task ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                            .background(Color.White, RoundedCornerShape(7.dp))
+                            .padding(horizontal = 10.dp),
+                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = checkedTasks[task] == true,
+                            onCheckedChange = { checkedTasks[task] = it }
+                        )
+                        Text(task)
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+
+                Row {
+                    OutlinedTextField(
+                        value = customTask,
+                        onValueChange = { customTask = it },
+                        placeholder = { Text("Custom task…") },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(containerColor = GarageDark)
+                    ) {
+                        Text("Add", color = Color.White)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = {}) {
+                    Text("Cancel", color = Color.Black)
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Button(
+                    onClick = {
+                        garageViewModel.saveTruck(
+                            plateNumber = plateNumber,
+                            customerName = customerName,
+                            customerPhone = customerPhone,
+                            make = make,
+                            model = model,
+                            kilometers = kilometers.toIntOrNull() ?: 0,
+                            fuelLevel = fuelLevel,
+                            reportedIssue = reportedIssue,
+                            damageNotes = damageNotes,
+                            condition = "Pending",
+                            notes = customTask
+                        )
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = GarageOrange),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text("Check in truck", color = Color.Black)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
         }
+    }
+}
+
+@Composable
+fun CardBox(
+    title: String,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Column(
+            modifier = Modifier.padding(22.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(title, fontWeight = FontWeight.Bold)
+            content()
+        }
+    }
+}
+
+@Composable
+fun GarageInput(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    placeholder: String = "",
+    height: Int = 58
+) {
+    Column {
+        Text(label)
+
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            placeholder = {
+                if (placeholder.isNotEmpty()) Text(placeholder)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height.dp),
+            singleLine = height <= 58,
+            shape = RoundedCornerShape(7.dp)
+        )
     }
 }
