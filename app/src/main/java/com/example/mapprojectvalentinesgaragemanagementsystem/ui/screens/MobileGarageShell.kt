@@ -103,3 +103,24 @@ fun MobileGarageShell(
         )
     }
 }
+@Composable
+fun NavButton(
+    text: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(8.dp),
+        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (selected) GarageOrange else GarageDark,
+            contentColor = if (selected) Color.Black else Color.White
+        )
+    ) {
+        icon()
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(text = text, maxLines = 1)
+    }
+}
