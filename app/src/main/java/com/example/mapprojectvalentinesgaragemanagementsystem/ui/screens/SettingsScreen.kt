@@ -46,7 +46,7 @@ fun SettingsScreen(
         SettingsItem(
             title = "Theme switch",
             description = "Change between light and dark mode",
-            icon = Icons.Default.DarkMode
+            icon = Icons.Default.Settings
         )
 
         SettingsItem(
@@ -65,7 +65,7 @@ fun SettingsScreen(
             SettingsItem(
                 title = "Admin controls",
                 description = "Manage mechanics and owner-only settings",
-                icon = Icons.Default.AdminPanelSettings
+                icon = Icons.Default.Person
             )
         }
 
