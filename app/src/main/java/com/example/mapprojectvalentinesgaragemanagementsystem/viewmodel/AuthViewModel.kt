@@ -26,6 +26,13 @@ class AuthViewModel : ViewModel() {
         repository.login(email, password, onSuccess, onError)
     }
 
+    fun getCurrentUserRole(
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        repository.getCurrentUserRole(onSuccess, onError)
+    }
+
     fun isLoggedIn(): Boolean {
         return repository.isLoggedIn()
     }

@@ -17,8 +17,13 @@ import com.example.mapprojectvalentinesgaragemanagementsystem.viewmodel.GarageVi
 
 @Composable
 fun TruckCheckInScreen(
+    userRole: String,
+    onTrucksClick: () -> Unit,
+    onReportsClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     garageViewModel: GarageViewModel = viewModel()
 ) {
+
     var plateNumber by remember { mutableStateOf("") }
     var customerName by remember { mutableStateOf("") }
     var customerPhone by remember { mutableStateOf("") }
@@ -41,20 +46,25 @@ fun TruckCheckInScreen(
         "Diagnostic scan"
     )
 
-    val checkedTasks = remember { mutableStateMapOf<String, Boolean>() }
+    val checkedTasks = remember {
+        mutableStateMapOf<String, Boolean>()
+    }
 
     MobileGarageShell(
         selectedTab = "checkin",
-        onTrucksClick = {},
+        userRole = userRole,
+        onTrucksClick = onTrucksClick,
         onCheckInClick = {},
-        onReportsClick = {},
-        onLogoutClick = {}
+        onReportsClick = onReportsClick,
+        onLogoutClick = onLogoutClick
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+
             Text(
                 text = "New check-in",
                 style = MaterialTheme.typography.headlineLarge,
@@ -66,18 +76,55 @@ fun TruckCheckInScreen(
             Spacer(modifier = Modifier.height(28.dp))
 
             CardBox(title = "Truck & customer") {
-                GarageInput(plateNumber, { plateNumber = it }, "Plate number *")
-                GarageInput(customerName, { customerName = it }, "Customer name *")
-                GarageInput(make, { make = it }, "Make", "Volvo, Scania…")
-                GarageInput(model, { model = it }, "Model")
-                GarageInput(customerPhone, { customerPhone = it }, "Customer phone")
+
+                GarageInput(
+                    plateNumber,
+                    { plateNumber = it },
+                    "Plate number *"
+                )
+
+                GarageInput(
+                    customerName,
+                    { customerName = it },
+                    "Customer name *"
+                )
+
+                GarageInput(
+                    make,
+                    { make = it },
+                    "Make",
+                    "Volvo, Scania…"
+                )
+
+                GarageInput(
+                    model,
+                    { model = it },
+                    "Model"
+                )
+
+                GarageInput(
+                    customerPhone,
+                    { customerPhone = it },
+                    "Customer phone"
+                )
             }
 
             Spacer(modifier = Modifier.height(22.dp))
 
             CardBox(title = "Condition at check-in") {
-                GarageInput(kilometers, { kilometers = it }, "Odometer (km) *")
-                GarageInput(fuelLevel, { fuelLevel = it }, "Fuel level")
+
+                GarageInput(
+                    kilometers,
+                    { kilometers = it },
+                    "Odometer (km) *"
+                )
+
+                GarageInput(
+                    fuelLevel,
+                    { fuelLevel = it },
+                    "Fuel level"
+                )
+
                 GarageInput(
                     value = reportedIssue,
                     onValueChange = { reportedIssue = it },
@@ -85,6 +132,7 @@ fun TruckCheckInScreen(
                     placeholder = "What does the customer say is wrong?",
                     height = 82
                 )
+
                 GarageInput(
                     value = damageNotes,
                     onValueChange = { damageNotes = it },
@@ -99,7 +147,10 @@ fun TruckCheckInScreen(
                     onClick = {},
                     modifier = Modifier.size(78.dp),
                     shape = RoundedCornerShape(8.dp),
-                    border = BorderStroke(1.dp, Color(0xFFD8CCC4))
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFFD8CCC4)
+                    )
                 ) {
                     Text("Add")
                 }
@@ -108,19 +159,30 @@ fun TruckCheckInScreen(
             Spacer(modifier = Modifier.height(22.dp))
 
             CardBox(title = "Repair tasks") {
+
                 repairTasks.forEach { task ->
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp)
-                            .background(Color.White, RoundedCornerShape(7.dp))
+                            .background(
+                                Color.White,
+                                RoundedCornerShape(7.dp)
+                            )
                             .padding(horizontal = 10.dp),
-                        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+
+                        verticalAlignment =
+                            androidx.compose.ui.Alignment.CenterVertically
                     ) {
+
                         Checkbox(
                             checked = checkedTasks[task] == true,
-                            onCheckedChange = { checkedTasks[task] = it }
+                            onCheckedChange = {
+                                checkedTasks[task] = it
+                            }
                         )
+
                         Text(task)
                     }
 
@@ -128,10 +190,13 @@ fun TruckCheckInScreen(
                 }
 
                 Row {
+
                     OutlinedTextField(
                         value = customTask,
                         onValueChange = { customTask = it },
-                        placeholder = { Text("Custom task…") },
+                        placeholder = {
+                            Text("Custom task…")
+                        },
                         modifier = Modifier.weight(1f),
                         singleLine = true
                     )
@@ -140,9 +205,14 @@ fun TruckCheckInScreen(
 
                     Button(
                         onClick = {},
-                        colors = ButtonDefaults.buttonColors(containerColor = GarageDark)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = GarageDark
+                        )
                     ) {
-                        Text("Add", color = Color.White)
+                        Text(
+                            "Add",
+                            color = Color.White
+                        )
                     }
                 }
             }
@@ -153,14 +223,19 @@ fun TruckCheckInScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
+
                 TextButton(onClick = {}) {
-                    Text("Cancel", color = Color.Black)
+                    Text(
+                        "Cancel",
+                        color = Color.Black
+                    )
                 }
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Button(
                     onClick = {
+
                         garageViewModel.saveTruck(
                             plateNumber = plateNumber,
                             customerName = customerName,
@@ -175,10 +250,18 @@ fun TruckCheckInScreen(
                             notes = customTask
                         )
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = GarageOrange),
+
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = GarageOrange
+                    ),
+
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text("Check in truck", color = Color.Black)
+
+                    Text(
+                        "Check in truck",
+                        color = Color.Black
+                    )
                 }
             }
 
@@ -186,22 +269,31 @@ fun TruckCheckInScreen(
         }
     }
 }
-
 @Composable
 fun CardBox(
     title: String,
     content: @Composable ColumnScope.() -> Unit
 ) {
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
     ) {
+
         Column(
             modifier = Modifier.padding(22.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Text(title, fontWeight = FontWeight.Bold)
+
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold
+            )
+
             content()
         }
     }
@@ -215,19 +307,27 @@ fun GarageInput(
     placeholder: String = "",
     height: Int = 58
 ) {
+
     Column {
+
         Text(label)
 
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
+
             placeholder = {
-                if (placeholder.isNotEmpty()) Text(placeholder)
+                if (placeholder.isNotEmpty()) {
+                    Text(placeholder)
+                }
             },
+
             modifier = Modifier
                 .fillMaxWidth()
                 .height(height.dp),
+
             singleLine = height <= 58,
+
             shape = RoundedCornerShape(7.dp)
         )
     }
