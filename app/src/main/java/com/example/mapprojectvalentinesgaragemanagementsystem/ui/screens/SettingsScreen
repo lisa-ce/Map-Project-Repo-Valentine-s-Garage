@@ -1,1 +1,78 @@
+package com.example.mapprojectvalentinesgaragemanagementsystem.ui.screens
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun SettingsScreen(
+    userRole: String,
+    onTrucksClick: () -> Unit,
+    onCheckInClick: () -> Unit,
+    onReportsClick: () -> Unit,
+    onLogoutClick: () -> Unit
+) {
+    MobileGarageShell(
+        selectedTab = "settings",
+        userRole = userRole,
+        onTrucksClick = onTrucksClick,
+        onCheckInClick = onCheckInClick,
+        onReportsClick = onReportsClick,
+        onLogoutClick = onLogoutClick,
+        onSettingsClick = {}
+    ) {
+        Text(
+            text = "Settings",
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text("Manage your account and garage preferences.")
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        SettingsItem(
+            title = "Profile settings",
+            description = "View and edit your personal profile",
+            icon = Icons.Default.Person
+        )
+
+        SettingsItem(
+            title = "Theme switch",
+            description = "Change between light and dark mode",
+            icon = Icons.Default.DarkMode
+        )
+
+        SettingsItem(
+            title = "Account management",
+            description = "Manage login and account information",
+            icon = Icons.Default.AccountCircle
+        )
+
+        SettingsItem(
+            title = "Garage settings",
+            description = "Manage garage information and preferences",
+            icon = Icons.Default.Build
+        )
+
+        if (userRole == "Owner") {
+            SettingsItem(
+                title = "Admin controls",
+                description = "Manage mechanics and owner-only settings",
+                icon = Icons.Default.AdminPanelSettings
+            )
+        }
+
+        SettingsItem(
+            title = "About page",
+            description = "About Valentine’s Garage Management System",
+            icon = Icons.Default.Info
+        )
+    }
+}
