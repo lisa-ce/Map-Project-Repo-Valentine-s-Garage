@@ -8,7 +8,7 @@ During truck servicing and repairs, mechanics are expected to collaboratively co
 
 To solve this problem, the Valentine’s Garage Management System was developed.
 
-#The application allows mechanics to:
+##The application allows mechanics to:
 
 -Check in trucks
 -Record truck condition before servicing
@@ -18,16 +18,16 @@ To solve this problem, the Valentine’s Garage Management System was developed.
 
 At the same time, the owner (Valentine) has access to reports and monitoring tools that allow him to oversee all garage activities and improve accountability.
 
-#Technologies Used
+##Technologies Used
 
-#The project was developed using:
+##The project was developed using:
 
 -Kotlin
 -Jetpack Compose
 -Firebase Authentication
 -Firebase Firestore
 
-#Firebase is used for:
+##Firebase is used for:
 
 -User authentication
 -Cloud database storage
