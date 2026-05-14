@@ -2,14 +2,14 @@
 # Valentine’s Garage Management System
 ## Overview
 
-Architecture
+## Architecture
 
 The application follows the MVVM (Model-View-ViewModel) architectural pattern.
 
 The project is structured into different files and packages so that all logic is not placed in a single file.
 
-Structure
-data
+## Structure
+### data
 
 Contains:
 
@@ -21,8 +21,8 @@ Example:
 
 Truck.kt
 GarageRepository.kt
-viewmodel
 
+### viewmodel
 Contains:
 
 Business logic
@@ -33,8 +33,8 @@ Example:
 
 GarageViewModel.kt
 AuthViewModel.kt
-ui/screens
 
+### ui/screen
 Contains:
 
 All application screens
@@ -46,11 +46,12 @@ Example:
 TrucksScreen.kt
 TruckCheckInScreen.kt
 ReportsScreen.kt
-User Roles
+
+## User Roles
 
 The system supports role-based access.
 
-Owner (Valentine)
+### Owner (Valentine)
 
 The owner can:
 
@@ -60,7 +61,7 @@ Track employee activity
 View all garage operations
 Mechanics
 
-Mechanics can:
+### Mechanics can:
 
 View trucks
 Perform truck check-ins
@@ -71,7 +72,7 @@ Mechanics cannot access management reports.
 
 This separation helps improve accountability and reduces misuse inside the garage.
 
-UI Design
+## UI Design
 
 The UI uses an orange and black accent theme to leverage:
 
@@ -82,7 +83,7 @@ Clear navigation on mobile devices
 
 The interface is optimized for mobile usage using Jetpack Compose.
 
-Problem Solved
+## Problem Solved
 
 The system solves the garage management problem by:
 
