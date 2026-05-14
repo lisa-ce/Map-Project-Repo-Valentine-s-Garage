@@ -30,6 +30,7 @@ fun MobileGarageShell(
     onCheckInClick: () -> Unit,
     onReportsClick: () -> Unit,
     onLogoutClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -47,7 +48,7 @@ fun MobileGarageShell(
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             IconButton(
-                onClick = {},
+                onClick = onSettingsClick,
                 modifier = Modifier
                     .size(42.dp)
                     .background(GarageOrange, RoundedCornerShape(10.dp))
