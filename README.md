@@ -2,6 +2,37 @@
 # Valentine’s Garage Management System
 ## Overview
 
+Valentine owns a truck garage, but he struggles to keep track of which mechanic checked or serviced which truck. This creates opportunities for misuse in the garage because there is no proper accountability system.
+
+During truck servicing and repairs, mechanics are expected to collaboratively complete repair tasks and write notes about the work they performed on each vehicle. However, some tasks are often left undone because one mechanic may assume another colleague already completed them.
+
+To solve this problem, the Valentine’s Garage Management System was developed.
+
+#The application allows mechanics to:
+
+-Check in trucks
+-Record truck condition before servicing
+-Tick completed repair tasks
+-Add repair notes
+-Track servicing activities
+
+At the same time, the owner (Valentine) has access to reports and monitoring tools that allow him to oversee all garage activities and improve accountability.
+
+#Technologies Used
+
+#The project was developed using:
+
+-Kotlin
+-Jetpack Compose
+-Firebase Authentication
+-Firebase Firestore
+
+#Firebase is used for:
+
+-User authentication
+-Cloud database storage
+-Role-based access management
+
 ## Architecture
 
 The application follows the MVVM (Model-View-ViewModel) architectural pattern.
