@@ -31,6 +31,7 @@ fun MobileGarageShell(
     onReportsClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onSettingsClick: () -> Unit,
+
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(

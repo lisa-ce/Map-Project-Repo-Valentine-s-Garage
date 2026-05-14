@@ -56,7 +56,8 @@ fun TruckCheckInScreen(
         onTrucksClick = onTrucksClick,
         onCheckInClick = {},
         onReportsClick = onReportsClick,
-        onLogoutClick = onLogoutClick
+        onLogoutClick = onLogoutClick,
+        onSettingsClick = {}
     ) {
 
         Column(

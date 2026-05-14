@@ -88,17 +88,25 @@ fun AppNavigation() {
         composable("trucks") {
             TrucksScreen(
                 userRole = userRole,
+
                 onCheckInClick = {
                     navController.navigate("checkin")
                 },
+
                 onReportsClick = {
                     if (userRole == "Owner") {
                         navController.navigate("reports")
                     }
                 },
+
+                onSettingsClick = {
+                    navController.navigate("settings")
+                },
+
                 onLogoutClick = {
                     authViewModel.logout()
                     userRole = "Mechanic"
+
                     navController.navigate("login") {
                         popUpTo("trucks") { inclusive = true }
                     }
@@ -166,6 +174,9 @@ fun AppNavigation() {
                         navController.navigate("login") {
                             popUpTo("reports") { inclusive = true }
                         }
+                    },
+                    onSettingsClick = {
+                        navController.navigate("settings")
                     }
                 )
             } else {
@@ -175,6 +186,9 @@ fun AppNavigation() {
                         navController.navigate("checkin")
                     },
                     onReportsClick = {},
+                    onSettingsClick = {
+                        navController.navigate("settings")
+                    },
                     onLogoutClick = {
                         authViewModel.logout()
                         userRole = "Mechanic"
@@ -182,6 +196,7 @@ fun AppNavigation() {
                             popUpTo("reports") { inclusive = true }
                         }
                     }
+
                 )
             }
         }

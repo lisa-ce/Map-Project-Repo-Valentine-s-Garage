@@ -13,10 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
+
 fun TrucksScreen(
     userRole: String,
     onCheckInClick: () -> Unit,
     onReportsClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
 
@@ -26,7 +28,9 @@ fun TrucksScreen(
         onTrucksClick = {},
         onCheckInClick = onCheckInClick,
         onReportsClick = onReportsClick,
-        onLogoutClick = onLogoutClick
+        onLogoutClick = onLogoutClick,
+        onSettingsClick = {},
+
     ) {
 
         Text(

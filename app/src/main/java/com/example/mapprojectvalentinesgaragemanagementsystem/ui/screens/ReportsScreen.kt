@@ -18,7 +18,8 @@ fun ReportsScreen(
     userRole: String,
     onTrucksClick: () -> Unit,
     onCheckInClick: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     MobileGarageShell(
         selectedTab = "reports",
@@ -26,7 +27,8 @@ fun ReportsScreen(
         onTrucksClick = onTrucksClick,
         onCheckInClick = onCheckInClick,
         onReportsClick = {},
-        onLogoutClick = onLogoutClick
+        onLogoutClick = onLogoutClick,
+        onSettingsClick = {}
     ) {
         Text(
             text = "Reports",
