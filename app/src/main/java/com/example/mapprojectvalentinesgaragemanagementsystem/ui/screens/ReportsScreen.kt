@@ -127,7 +127,27 @@ fun ReportsScreen(
     }
 }
 
+@Composable
+fun ReportStatCard() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        SmallStatCard(
+            title = "Tasks",
+            value = "0",
+            iconColor = Color(0xFF00A878),
+            modifier = Modifier.weight(1f)
+        )
 
+        SmallStatCard(
+            title = "Check-ins",
+            value = "0",
+            iconColor = GarageOrange,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
 
 
 
