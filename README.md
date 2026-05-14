@@ -10,11 +10,11 @@ To solve this problem, the Valentine’s Garage Management System was developed.
 
 ## The application allows mechanics to:
 
--Check in trucks
--Record truck condition before servicing
--Tick completed repair tasks
--Add repair notes
--Track servicing activities
+Check in trucks
+Record truck condition before servicing
+Tick completed repair tasks
+Add repair notes
+Track servicing activities
 
 At the same time, the owner (Valentine) has access to reports and monitoring tools that allow him to oversee all garage activities and improve accountability.
 
@@ -22,16 +22,16 @@ At the same time, the owner (Valentine) has access to reports and monitoring too
 
 ## The project was developed using:
 
--Kotlin
--Jetpack Compose
--Firebase Authentication
--Firebase Firestore
+Kotlin
+Jetpack Compose
+Firebase Authentication
+Firebase Firestore
 
 ## Firebase is used for:
 
--User authentication
--Cloud database storage
--Role-based access management
+User authentication
+Cloud database storage
+Role-based access management
 
 ## Architecture
 
