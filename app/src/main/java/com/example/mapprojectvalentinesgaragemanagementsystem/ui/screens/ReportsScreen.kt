@@ -11,7 +11,12 @@ import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageCre
 import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageTextGrey
 
 @Composable
-fun ReportsScreen() {
+fun ReportsScreen(
+    userRole: String,
+    onTrucksClick: () -> Unit,
+    onCheckInClick: () -> Unit,
+    onLogoutClick: () -> Unit
+)  {
     Column(
         modifier = Modifier
             .fillMaxSize()

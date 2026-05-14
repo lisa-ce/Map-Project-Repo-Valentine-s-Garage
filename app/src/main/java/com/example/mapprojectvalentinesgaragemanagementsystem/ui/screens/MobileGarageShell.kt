@@ -25,19 +25,18 @@ val GarageCream = Color(0xFFFBF7F4)
 @Composable
 fun MobileGarageShell(
     selectedTab: String,
+    userRole: String,
     onTrucksClick: () -> Unit,
     onCheckInClick: () -> Unit,
     onReportsClick: () -> Unit,
     onLogoutClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(GarageCream)
     ) {
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -45,26 +44,19 @@ fun MobileGarageShell(
                 .statusBarsPadding()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 10.dp, vertical = 12.dp),
-
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-
             IconButton(
                 onClick = {},
                 modifier = Modifier
                     .size(42.dp)
-                    .background(
-                        GarageOrange,
-                        RoundedCornerShape(10.dp)
-                    )
+                    .background(GarageOrange, RoundedCornerShape(10.dp))
             ) {
-
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = null,
                     tint = Color.White
                 )
-
             }
 
             NavButton(
@@ -72,12 +64,7 @@ fun MobileGarageShell(
                 selected = selectedTab == "trucks",
                 onClick = onTrucksClick
             ) {
-
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    contentDescription = null
-                )
-
+                Icon(Icons.Default.Home, contentDescription = null)
             }
 
             NavButton(
@@ -85,37 +72,25 @@ fun MobileGarageShell(
                 selected = selectedTab == "checkin",
                 onClick = onCheckInClick
             ) {
-
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
-
+                Icon(Icons.Default.Add, contentDescription = null)
             }
 
-            NavButton(
-                text = "Reports",
-                selected = selectedTab == "reports",
-                onClick = onReportsClick
-            ) {
-
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = null
-                )
-
+            if (userRole == "Owner") {
+                NavButton(
+                    text = "Reports",
+                    selected = selectedTab == "reports",
+                    onClick = onReportsClick
+                ) {
+                    Icon(Icons.Default.Person, contentDescription = null)
+                }
             }
 
-            IconButton(
-                onClick = onLogoutClick
-            ) {
-
+            IconButton(onClick = onLogoutClick) {
                 Icon(
                     imageVector = Icons.Default.ExitToApp,
                     contentDescription = "Logout",
                     tint = Color.White
                 )
-
             }
         }
 
@@ -135,36 +110,17 @@ fun NavButton(
     onClick: () -> Unit,
     icon: @Composable () -> Unit
 ) {
-
     Button(
         onClick = onClick,
-
         shape = RoundedCornerShape(8.dp),
-
-        contentPadding = PaddingValues(
-            horizontal = 12.dp,
-            vertical = 10.dp
-        ),
-
+        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor =
-                if (selected) GarageOrange
-                else GarageDark,
-
-            contentColor =
-                if (selected) Color.Black
-                else Color.White
+            containerColor = if (selected) GarageOrange else GarageDark,
+            contentColor = if (selected) Color.Black else Color.White
         )
     ) {
-
         icon()
-
         Spacer(modifier = Modifier.width(6.dp))
-
-        Text(
-            text = text,
-            maxLines = 1
-        )
-
+        Text(text = text, maxLines = 1)
     }
 }

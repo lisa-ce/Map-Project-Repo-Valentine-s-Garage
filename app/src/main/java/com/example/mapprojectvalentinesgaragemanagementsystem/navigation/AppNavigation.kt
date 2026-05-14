@@ -1,6 +1,6 @@
 package com.example.mapprojectvalentinesgaragemanagementsystem.navigation
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.*
 import com.example.mapprojectvalentinesgaragemanagementsystem.ui.screens.*
@@ -11,6 +11,21 @@ fun AppNavigation() {
 
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
+
+    var userRole by remember { mutableStateOf("Mechanic") }
+
+    LaunchedEffect(authViewModel.isLoggedIn()) {
+        if (authViewModel.isLoggedIn()) {
+            authViewModel.getCurrentUserRole(
+                onSuccess = { role ->
+                    userRole = role
+                },
+                onError = {
+                    userRole = "Mechanic"
+                }
+            )
+        }
+    }
 
     val startScreen = if (authViewModel.isLoggedIn()) {
         "trucks"
@@ -25,9 +40,20 @@ fun AppNavigation() {
         composable("login") {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate("trucks") {
-                        popUpTo("login") { inclusive = true }
-                    }
+                    authViewModel.getCurrentUserRole(
+                        onSuccess = { role ->
+                            userRole = role
+                            navController.navigate("trucks") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        },
+                        onError = {
+                            userRole = "Mechanic"
+                            navController.navigate("trucks") {
+                                popUpTo("login") { inclusive = true }
+                            }
+                        }
+                    )
                 },
                 onSignupClick = {
                     navController.navigate("signup")
@@ -38,9 +64,20 @@ fun AppNavigation() {
         composable("signup") {
             SignupScreen(
                 onSignupSuccess = {
-                    navController.navigate("trucks") {
-                        popUpTo("signup") { inclusive = true }
-                    }
+                    authViewModel.getCurrentUserRole(
+                        onSuccess = { role ->
+                            userRole = role
+                            navController.navigate("trucks") {
+                                popUpTo("signup") { inclusive = true }
+                            }
+                        },
+                        onError = {
+                            userRole = "Mechanic"
+                            navController.navigate("trucks") {
+                                popUpTo("signup") { inclusive = true }
+                            }
+                        }
+                    )
                 },
                 onLoginClick = {
                     navController.navigate("login")
@@ -50,14 +87,18 @@ fun AppNavigation() {
 
         composable("trucks") {
             TrucksScreen(
+                userRole = userRole,
                 onCheckInClick = {
                     navController.navigate("checkin")
                 },
                 onReportsClick = {
-                    navController.navigate("reports")
+                    if (userRole == "Owner") {
+                        navController.navigate("reports")
+                    }
                 },
                 onLogoutClick = {
                     authViewModel.logout()
+                    userRole = "Mechanic"
                     navController.navigate("login") {
                         popUpTo("trucks") { inclusive = true }
                     }
@@ -66,11 +107,60 @@ fun AppNavigation() {
         }
 
         composable("checkin") {
-            TruckCheckInScreen()
+            TruckCheckInScreen(
+                userRole = userRole,
+                onTrucksClick = {
+                    navController.navigate("trucks")
+                },
+                onReportsClick = {
+                    if (userRole == "Owner") {
+                        navController.navigate("reports")
+                    }
+                },
+                onLogoutClick = {
+                    authViewModel.logout()
+                    userRole = "Mechanic"
+                    navController.navigate("login") {
+                        popUpTo("checkin") { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable("reports") {
-            ReportsScreen()
+            if (userRole == "Owner") {
+                ReportsScreen(
+                    userRole = userRole,
+                    onTrucksClick = {
+                        navController.navigate("trucks")
+                    },
+                    onCheckInClick = {
+                        navController.navigate("checkin")
+                    },
+                    onLogoutClick = {
+                        authViewModel.logout()
+                        userRole = "Mechanic"
+                        navController.navigate("login") {
+                            popUpTo("reports") { inclusive = true }
+                        }
+                    }
+                )
+            } else {
+                TrucksScreen(
+                    userRole = userRole,
+                    onCheckInClick = {
+                        navController.navigate("checkin")
+                    },
+                    onReportsClick = {},
+                    onLogoutClick = {
+                        authViewModel.logout()
+                        userRole = "Mechanic"
+                        navController.navigate("login") {
+                            popUpTo("reports") { inclusive = true }
+                        }
+                    }
+                )
+            }
         }
     }
 }
