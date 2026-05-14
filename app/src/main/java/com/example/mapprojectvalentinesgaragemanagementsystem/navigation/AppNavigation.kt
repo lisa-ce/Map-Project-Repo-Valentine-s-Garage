@@ -105,6 +105,29 @@ fun AppNavigation() {
                 }
             )
         }
+        composable("settings") {
+    SettingsScreen(
+        userRole = userRole,
+        onTrucksClick = {
+            navController.navigate("trucks")
+        },
+        onCheckInClick = {
+            navController.navigate("checkin")
+        },
+        onReportsClick = {
+            if (userRole == "Owner") {
+                navController.navigate("reports")
+            }
+        },
+        onLogoutClick = {
+            authViewModel.logout()
+            userRole = "Mechanic"
+            navController.navigate("login") {
+                popUpTo("settings") { inclusive = true }
+            }
+        }
+    )
+}
 
         composable("checkin") {
             TruckCheckInScreen(
