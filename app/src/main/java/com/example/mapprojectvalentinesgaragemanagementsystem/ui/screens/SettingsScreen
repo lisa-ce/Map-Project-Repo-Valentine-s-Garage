@@ -76,3 +76,41 @@ fun SettingsScreen(
         )
     }
 }
+
+@Composable
+fun SettingsItem(
+    title: String,
+    description: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 12.dp),
+        shape = RoundedCornerShape(14.dp)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = GarageOrange
+            )
+
+            Spacer(modifier = Modifier.width(14.dp))
+
+            Column {
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+    }
+}
