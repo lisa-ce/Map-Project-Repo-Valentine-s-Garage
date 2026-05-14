@@ -149,5 +149,37 @@ fun ReportStatCard() {
     }
 }
 
+@Composable
+fun SmallStatCard(
+    title: String,
+    value: String,
+    iconColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier.padding(14.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = null,
+                tint = iconColor
+            )
 
+            Column {
+                Text(title, color = Color.Gray)
+                Text(
+                    value,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+        }
+    }
+}
 
