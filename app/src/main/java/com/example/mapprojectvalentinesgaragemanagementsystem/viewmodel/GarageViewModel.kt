@@ -180,7 +180,7 @@ class GarageViewModel : ViewModel() {
     }
 
     /**
-     * Marks a truck as completed (or restores to In Service).
+     * Will Mark a truck as completed (or restores to In Service).
      */
     fun updateTruckStatus(truckId: String, status: String) {
         repository.updateTruckStatus(truckId, status)
