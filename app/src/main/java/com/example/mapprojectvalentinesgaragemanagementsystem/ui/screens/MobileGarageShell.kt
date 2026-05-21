@@ -12,16 +12,20 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageCream
+import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageDark
+import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageOrange
 
-val GarageOrange = Color(0xFFFF7900)
-val GarageDark = Color(0xFF160706)
-val GarageCream = Color(0xFFFBF7F4)
-
+/**
+ * App shell with top navigation bar, shared across all main screens.
+ * Shows Owner-only navigation items (Reports) based on userRole.
+ */
 @Composable
 fun MobileGarageShell(
     selectedTab: String,
@@ -29,9 +33,9 @@ fun MobileGarageShell(
     onTrucksClick: () -> Unit,
     onCheckInClick: () -> Unit,
     onReportsClick: () -> Unit,
+    onTasksClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onSettingsClick: () -> Unit,
-
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -54,45 +58,38 @@ fun MobileGarageShell(
                     .size(42.dp)
                     .background(GarageOrange, RoundedCornerShape(10.dp))
             ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = null,
-                    tint = Color.White
-                )
+                Icon(Icons.Default.Settings, contentDescription = "Settings", tint = Color.White)
             }
 
             NavButton(
                 text = "Trucks",
                 selected = selectedTab == "trucks",
                 onClick = onTrucksClick
-            ) {
-                Icon(Icons.Default.Home, contentDescription = null)
-            }
+            ) { Icon(Icons.Default.Home, contentDescription = null) }
 
             NavButton(
-                text = "New check-in",
+                text = "Check-in",
                 selected = selectedTab == "checkin",
                 onClick = onCheckInClick
-            ) {
-                Icon(Icons.Default.Add, contentDescription = null)
-            }
+            ) { Icon(Icons.Default.Add, contentDescription = null) }
 
+            NavButton(
+                text = "Repair Tasks",
+                selected = selectedTab == "tasks",
+                onClick = onTasksClick
+            ) { Icon(Icons.Default.Build, contentDescription = null) }
+
+            // Reports only visible to Owner
             if (userRole == "Owner") {
                 NavButton(
                     text = "Reports",
                     selected = selectedTab == "reports",
                     onClick = onReportsClick
-                ) {
-                    Icon(Icons.Default.Person, contentDescription = null)
-                }
+                ) { Icon(Icons.Default.Person, contentDescription = null) }
             }
 
             IconButton(onClick = onLogoutClick) {
-                Icon(
-                    imageVector = Icons.Default.ExitToApp,
-                    contentDescription = "Logout",
-                    tint = Color.White
-                )
+                Icon(Icons.Default.ExitToApp, contentDescription = "Logout", tint = Color.White)
             }
         }
 
@@ -105,6 +102,7 @@ fun MobileGarageShell(
         )
     }
 }
+
 @Composable
 fun NavButton(
     text: String,
