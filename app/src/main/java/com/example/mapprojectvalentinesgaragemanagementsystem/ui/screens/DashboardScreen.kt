@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 fun DashboardScreen(
     onCheckInClick: () -> Unit,
     onRepairsClick: () -> Unit,
+    onRepairTasksClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
 
@@ -63,7 +64,7 @@ fun DashboardScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = { },
+                onClick = onRepairTasksClick,
                 modifier = Modifier.fillMaxWidth()
             ) {
 
