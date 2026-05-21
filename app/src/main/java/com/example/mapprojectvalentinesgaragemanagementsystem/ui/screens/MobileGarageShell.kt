@@ -23,8 +23,10 @@ import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageDar
 import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageOrange
 
 /**
+ *
  * App shell with top navigation bar, shared across all main screens.
  * Shows Owner-only navigation items (Reports) based on userRole.
+ *
  */
 @Composable
 fun MobileGarageShell(
