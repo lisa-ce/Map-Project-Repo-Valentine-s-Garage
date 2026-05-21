@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.mapprojectvalentinesgaragemanagementsystem.ui.theme.GarageOrange
 
 @Composable
 fun SettingsScreen(
@@ -16,6 +17,7 @@ fun SettingsScreen(
     onTrucksClick: () -> Unit,
     onCheckInClick: () -> Unit,
     onReportsClick: () -> Unit,
+    onTasksClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     MobileGarageShell(
@@ -24,6 +26,7 @@ fun SettingsScreen(
         onTrucksClick = onTrucksClick,
         onCheckInClick = onCheckInClick,
         onReportsClick = onReportsClick,
+        onTasksClick = onTasksClick,
         onLogoutClick = onLogoutClick,
         onSettingsClick = {}
     ) {
